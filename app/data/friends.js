@@ -35,7 +35,7 @@ var friends = [
 	{
 		name: "Unknown",
 		photo: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-		score: [
+		scores: [
 			"3",
 			"1",
 			"4",
