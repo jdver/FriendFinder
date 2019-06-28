@@ -175,6 +175,7 @@
         </div>
         <div class="modal-body">
           <h2 id="matchName"></h2>
+          <!-- <div id="imgContainer"></div> -->
           <img id="matchImg" src="" alt="">
         </div>
         <div class="modal-footer">
@@ -191,60 +192,99 @@
 
 <script type="text/javascript">
 
-$("#submit").on("click", function(event) {
-  
-  function validateForm() {
-    var isValid = true;
-    $(".form-control").each(function() {
-      if ($(this).val() === "") {
-        isValid = false;
-      }
-    });
+// $("#submit").on("click", function(event) {
+  // Validating function to ensure user enters a value for each question
 
-    $(".chosen-select").each(function() {
-      if ($(this).val() === "") {
-        isValid = false;
-      }
-    });
-    return isValid
-  }
+  document.querySelector("#submit").addEventListener("click", function () {
+  // document.querySelector('#submit').setAttribute('data-toggle', 'modal')
+  // document.querySelector('#submit').setAttribute('data-target', '#resultsModal')
+
+  // function validateForm() {
+  //   var isValid = true;
+  //   $(".form-control").each(function() {
+  //     if ($(this).val() === "") {
+  //       isValid = false;
+  //     }
+  //   });
+
+  //   $(".chosen-select").each(function() {
+  //     if ($(this).val() === "") {
+  //       isValid = false;
+  //     }
+  //   });
+  //   return isValid
+  // }
 event.preventDefault()
-  if (validateForm()) {
+//  if (validateForm()) {
     var userData = {
-      name: $("#name").val(),
-      photo: $("#photo").val(),
-      scores: [
-        $("#question1").val(),
-        $("#question2").val(),
-        $("#question3").val(),
-        $("#question4").val(),
-        $("#question5").val(),
-        $("#question6").val(),
-        $("#question7").val(),
-        $("#question8").val(),
-        $("#question9").val(),
-        $("#question10").val()
-      ]
+      // name: $("#name").val(),
+      // photo: $("#photo").val(),
+      // scores: [
+      //   $("#question1").val(),
+      //   $("#question2").val(),
+      //   $("#question3").val(),
+      //   $("#question4").val(),
+      //   $("#question5").val(),
+      //   $("#question6").val(),
+      //   $("#question7").val(),
+      //   $("#question8").val(),
+      //   $("#question9").val(),
+      //   $("#question10").val()
+      // ]
+        name: document.querySelector("#name").value,
+                photo: document.querySelector("#photo").value,
+                scores: [
+                    document.querySelector("#question1").value,
+                    document.querySelector("#question2").value,
+                    document.querySelector("#question3").value,
+                    document.querySelector("#question4").value,
+                    document.querySelector("#question5").value,
+                    document.querySelector("#question6").value,
+                    document.querySelector("#question7").value,
+                    document.querySelector("#question8").value,
+                    document.querySelector("#question9").value,
+                    document.querySelector("#question10").value
+                ]
     };
 
-    var currentURL = window.location.origin;
+  //   var currentURL = window.location.origin;
 
-    $.post(currentURL + "/api/friends", userData, function(data) {
-      $("#matchName").text(data.name);
-      $("#matchImg").attr("src", data.photo);
+  //   $.post(currentURL + "/api/friends", userData, function(data) {
+  //     $("#matchName").text(data.name);
+  //     $("#matchImg").attr("src", data.photo);
 
-    console.log(data)
-     $("#resultsModal").modal("toggle");
+  //   console.log(data)
+  //    $("#resultsModal").modal("toggle");
 
-    });
-  }
-  else {
-    alert("Please fill out form");
+  //   });
+  // }
+  // else {
+  //   alert("Please fill out form");
     
-  }
-  return false
+  // }
+  // return false
+  fetch("/api/friends", {
+                method: "POST",
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+              })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#matchName').innerHTML = data.name
+                document.querySelector('#matchImg').setAttribute('src', data.photo)
+                // document.getElementById("matchName").textContent = data.name;
+                // document.getElementById("matchImg").src = data.photo;
+                // Show the modal with the best match
+                 $("#resultsModal").modal("toggle");
+                // document.querySelector('#submit').dataset.toggle = 'modal'
+                // document.querySelector('#imgContainer').insertAdjacentHTML('afterbegin', `<img src="${data.photo}">`)
+               // document.body.appendChild(document.createElement('img'))
 
-    })
+                console.log(userData)
+            })
+          })
 
 </script>
 </body>
