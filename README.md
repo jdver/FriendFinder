@@ -6,5 +6,7 @@ Users will visit our webpage to access a survey which will ask them a series of 
 
 ## Results
 
+Take the survey at https://sleepy-reef-83945.herokuapp.com/ !
+
 
 ![alt test](images/pic1.png)
